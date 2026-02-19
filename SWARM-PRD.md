@@ -22,22 +22,27 @@
 
 ## 1. Quick Install
 
-Run this in any Claude Code session. It creates everything from scratch. No repos to clone, no plugins to install.
+### Via Plugin (recommended)
 
 ```
-/swarm-init
+/plugin marketplace add hgeldenhuys/recursive-ai
+/plugin install swarm@recursive-ai
+/swarm:init
 ```
 
-If that skill doesn't exist yet, paste the following into your terminal:
+Skills (`/swarm:ideate`, `/swarm:plan`, etc.), agents (`swarm:backend-dev`, etc.), and MCP tools (`swarm_validate`, etc.) are all available immediately after plugin install. The `/swarm:init` skill creates the `.swarm/` project structure.
+
+### Via CLI (alternative)
 
 ```bash
-# Create all 8 skill directories
-mkdir -p ~/.claude/skills/swarm-{init,ideate,plan,execute,verify,close,retro,run}
+git clone https://github.com/hgeldenhuys/recursive-ai.git
+cd recursive-ai && bun install
+bun packages/cli/src/index.ts init /path/to/your-project
 ```
 
-Then create each `SKILL.md` file from [Section 4](#4-skills) below.
+### Manual (from this document)
 
-To initialize SWARM in a project, create the `.swarm/` directory structure from [Section 3](#3-directory-structure), populate templates from [Section 6](#6-swarm-templates), and create agent memory from [Section 8](#8-agent-memory-seeds).
+Create the `.swarm/` directory structure from [Section 3](#3-directory-structure), populate templates from [Section 6](#6-swarm-templates), quality gates from [Section 7](#7-quality-gates), and agent memory from [Section 8](#8-agent-memory-seeds).
 
 ---
 
@@ -54,21 +59,35 @@ SWARM (Structured Workflow for Agent-Run Methodology) brings Scrum-like discipli
 
 ## 3. Directory Structure
 
-### Skills (installed to `~/.claude/skills/`)
+### Plugin structure (provided by the plugin)
 
 ```
-~/.claude/skills/
-├── swarm-init/SKILL.md
-├── swarm-ideate/SKILL.md
-├── swarm-plan/SKILL.md
-├── swarm-execute/SKILL.md
-├── swarm-verify/SKILL.md
-├── swarm-close/SKILL.md
-├── swarm-retro/SKILL.md
-└── swarm-run/SKILL.md
+plugin-root/
+├── .claude-plugin/
+│   ├── plugin.json              # {"name": "swarm", ...}
+│   └── marketplace.json
+├── .mcp.json                    # MCP server config
+├── skills/                      # Auto-discovered → /swarm:init, /swarm:ideate, etc.
+│   ├── init/SKILL.md
+│   ├── ideate/SKILL.md
+│   ├── plan/SKILL.md
+│   ├── execute/SKILL.md
+│   ├── verify/SKILL.md
+│   ├── close/SKILL.md
+│   ├── retro/SKILL.md
+│   └── run/SKILL.md
+├── agents/                      # Auto-discovered → swarm:backend-dev, etc.
+│   ├── backend-dev.md
+│   ├── frontend-dev.md
+│   ├── qa-engineer.md
+│   ├── architect.md
+│   ├── tech-writer.md
+│   └── devops.md
+└── dist/
+    └── mcp-server.js            # Bundled MCP server
 ```
 
-### Project structure (created by `/swarm-init`)
+### Project structure (created by `/swarm:init`)
 
 ```
 your-project/
@@ -101,11 +120,11 @@ your-project/
 
 ## 4. Skills
 
-### 4.1 `~/.claude/skills/swarm-init/SKILL.md`
+### 4.1 `skills/init/SKILL.md`
 
 ```markdown
 ---
-name: swarm-init
+name: init
 description: Initialize SWARM SDLC in the current project
 allowed-tools: Read, Write, Edit, Bash, Glob
 ---
@@ -160,14 +179,14 @@ Append SWARM rules from Section 9 if not already present.
 
 ### Step 8: Report
 
-Tell the user what was created. Next: Run `/swarm-ideate` to create their first story.
+Tell the user what was created. Next: Run `/swarm:ideate` to create their first story.
 ```
 
-### 4.2 `~/.claude/skills/swarm-ideate/SKILL.md`
+### 4.2 `skills/ideate/SKILL.md`
 
 ```markdown
 ---
-name: swarm-ideate
+name: ideate
 description: Ideation phase — decompose problem, define acceptance criteria, estimate complexity
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
@@ -245,11 +264,11 @@ If clarification is needed:
 - Optional: question file in `.swarm/pending-questions/`
 ```
 
-### 4.3 `~/.claude/skills/swarm-plan/SKILL.md`
+### 4.3 `skills/plan/SKILL.md`
 
 ```markdown
 ---
-name: swarm-plan
+name: plan
 description: Planning phase — create task breakdown, assign agents, estimate effort
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
@@ -321,11 +340,11 @@ If clarification is needed during planning:
 - Story status: `planned` (or `awaiting_input`)
 ```
 
-### 4.4 `~/.claude/skills/swarm-execute/SKILL.md`
+### 4.4 `skills/execute/SKILL.md`
 
 ```markdown
 ---
-name: swarm-execute
+name: execute
 description: Execution phase — implement tasks according to plan, coordinate agents
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
@@ -398,11 +417,11 @@ After each task, the assigned agent appends a mini-retrospective:
 - Story status: `verifying`
 ```
 
-### 4.5 `~/.claude/skills/swarm-verify/SKILL.md`
+### 4.5 `skills/verify/SKILL.md`
 
 ```markdown
 ---
-name: swarm-verify
+name: verify
 description: Verification phase — run all checks, validate ACs, confirm Definition of Done
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
@@ -461,11 +480,11 @@ If all checks pass, set story status to `done`.
 - Verification report appended to story body
 ```
 
-### 4.6 `~/.claude/skills/swarm-close/SKILL.md`
+### 4.6 `skills/close/SKILL.md`
 
 ```markdown
 ---
-name: swarm-close
+name: close
 description: Close phase — generate retrospective, extract knowledge, archive story
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
@@ -530,11 +549,11 @@ For each agent involved, append key learnings to `.claude/agent-memory/{agent}/M
 - Archived story: `.swarm/archive/{ID}.md`
 ```
 
-### 4.7 `~/.claude/skills/swarm-retro/SKILL.md`
+### 4.7 `skills/retro/SKILL.md`
 
 ```markdown
 ---
-name: swarm-retro
+name: retro
 description: Standalone knowledge extraction — process retrospectives for knowledge items
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
@@ -589,11 +608,11 @@ Add `knowledge_extracted` array to retrospective frontmatter referencing all ite
 - Updated retrospective frontmatter
 ```
 
-### 4.8 `~/.claude/skills/swarm-run/SKILL.md`
+### 4.8 `skills/run/SKILL.md`
 
 ```markdown
 ---
-name: swarm-run
+name: run
 description: Full pipeline — run ideate, plan, execute, verify, close with phase gating
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
@@ -611,35 +630,35 @@ Full SWARM SDLC pipeline with phase gating. Runs all phases in sequence with con
 
 ### Phase 1: Ideate
 
-1. Execute the ideation process (see `/swarm-ideate`).
+1. Execute the ideation process (see `/swarm:ideate`).
 2. **Gate:** Verify story has at least 3 ACs, complexity estimated, status is `ideating`.
 3. If gate fails or status is `awaiting_input`, stop and report.
 4. If not `--auto`, ask for confirmation to proceed.
 
 ### Phase 2: Plan
 
-1. Execute the planning process (see `/swarm-plan`).
+1. Execute the planning process (see `/swarm:plan`).
 2. **Gate:** Verify at least one task defined, all ACs covered, no circular dependencies.
 3. If gate fails, stop and report.
 4. If not `--auto`, ask for confirmation.
 
 ### Phase 3: Execute
 
-1. Execute the implementation process (see `/swarm-execute`).
+1. Execute the implementation process (see `/swarm:execute`).
 2. **Gate:** All tasks done, code compiles (`bun run typecheck`), tests pass (`bun test`), lint passes (`bunx biome check .`).
 3. If gate fails, stop and report.
 4. If not `--auto`, ask for confirmation.
 
 ### Phase 4: Verify
 
-1. Execute the verification process (see `/swarm-verify`).
+1. Execute the verification process (see `/swarm:verify`).
 2. **Gate:** All ACs passing, story status is `done`.
 3. If gate fails, stop and report.
 4. If not `--auto`, ask for confirmation.
 
 ### Phase 5: Close
 
-1. Execute the close process (see `/swarm-close`).
+1. Execute the close process (see `/swarm:close`).
 2. **Gate:** Retrospective exists, story archived, knowledge extracted.
 3. If gate fails, stop and report.
 

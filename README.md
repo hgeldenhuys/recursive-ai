@@ -22,7 +22,7 @@ SWARM brings Scrum-like discipline to AI agent workflows:
 # Install the SWARM plugin
 /plugin install swarm@recursive-ai
 
-# Initialize SWARM in your project (installs skills + .swarm/ structure)
+# Initialize SWARM in your project
 /swarm:init
 ```
 
@@ -40,7 +40,7 @@ bun install
 bun packages/cli/src/index.ts init /path/to/your-project
 ```
 
-This creates the `.swarm/` structure and installs skills to `~/.claude/skills/swarm-*/SKILL.md`.
+This creates the `.swarm/` directory structure, quality gates, templates, and agent memory files.
 
 ### What initialization creates
 
