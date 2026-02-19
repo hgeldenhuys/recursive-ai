@@ -1,6 +1,6 @@
 ---
-name: "swarm-ideate"
-description: "Ideation phase — decompose problem, define acceptance criteria, estimate complexity"
+name: swarm-ideate
+description: Ideation phase — decompose problem, define acceptance criteria, estimate complexity
 model: ""
 allowed-tools:
   - "Read"

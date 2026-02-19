@@ -75,7 +75,7 @@ describe('Template Loader', () => {
         const templateFn = SKILL_TEMPLATES[name];
         expect(templateFn).toBeDefined();
         const content = templateFn!();
-        expect(content).toContain(`name: "${name}"`);
+        expect(content).toContain(`name: ${name}`);
         expect(content).toContain('description');
         expect(content.startsWith('---\n')).toBe(true);
       }
@@ -118,7 +118,7 @@ describe('Template Loader', () => {
         const templateFn = AGENT_TEMPLATES[name];
         expect(templateFn).toBeDefined();
         const content = templateFn!();
-        expect(content).toContain(`name: "${name}"`);
+        expect(content).toContain(`name: ${name}`);
         expect(content).toContain('Mini-Retrospective');
         expect(content.startsWith('---\n')).toBe(true);
       }

@@ -1,15 +1,8 @@
 ---
-name: "qa-engineer"
-description: "QA engineer agent — testing, verification, quality assurance"
-memory: "project"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Bash"
-  - "Glob"
-  - "Grep"
+name: qa-engineer
+description: QA engineer agent — testing, verification, quality assurance
+tools: Read, Write, Edit, Bash, Glob, Grep
+model: opus
 ---
 
 # QA Engineer Agent

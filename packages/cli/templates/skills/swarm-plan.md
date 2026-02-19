@@ -1,6 +1,6 @@
 ---
-name: "swarm-plan"
-description: "Planning phase — create task breakdown, assign agents, estimate effort"
+name: swarm-plan
+description: Planning phase — create task breakdown, assign agents, estimate effort
 model: ""
 allowed-tools:
   - "Read"

@@ -1,14 +1,7 @@
 ---
-name: "init"
-description: "Initialize SWARM SDLC in the current project"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Bash"
-  - "Glob"
-  - "mcp__swarm__swarm_init"
-  - "mcp__swarm__swarm_status"
+name: init
+description: Initialize SWARM SDLC in the current project
+allowed-tools: Read, Write, Bash, Glob, mcp__swarm__swarm_init, mcp__swarm__swarm_status
 ---
 
 # Skill: init

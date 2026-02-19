@@ -1,6 +1,6 @@
 ---
-name: "swarm-verify"
-description: "Verification phase — run all checks, validate ACs, confirm Definition of Done"
+name: swarm-verify
+description: Verification phase — run all checks, validate ACs, confirm Definition of Done
 model: ""
 allowed-tools:
   - "Read"

@@ -1,16 +1,7 @@
 ---
-name: "verify"
-description: "Verification phase — run all checks, validate ACs, confirm Definition of Done"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Bash"
-  - "Glob"
-  - "Grep"
-  - "mcp__swarm__swarm_validate"
-  - "mcp__swarm__swarm_transition"
+name: verify
+description: Verification phase — run all checks, validate ACs, confirm Definition of Done
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__swarm__swarm_validate, mcp__swarm__swarm_transition
 ---
 
 # Skill: verify

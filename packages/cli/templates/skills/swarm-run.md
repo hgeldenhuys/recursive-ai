@@ -1,6 +1,6 @@
 ---
-name: "swarm-run"
-description: "Full pipeline — run ideate → plan → execute → verify → close with phase gating"
+name: swarm-run
+description: Full pipeline — run ideate → plan → execute → verify → close with phase gating
 model: ""
 allowed-tools:
   - "Read"

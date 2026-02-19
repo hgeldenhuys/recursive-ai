@@ -1,15 +1,8 @@
 ---
-name: "tech-writer"
-description: "Tech writer agent — documentation, guides, changelogs"
-memory: "project"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Bash"
-  - "Glob"
-  - "Grep"
+name: tech-writer
+description: Tech writer agent — documentation, guides, changelogs
+tools: Read, Write, Edit, Bash, Glob, Grep
+model: sonnet
 ---
 
 # Tech Writer Agent

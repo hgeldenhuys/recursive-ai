@@ -1,16 +1,7 @@
 ---
-name: "execute"
-description: "Execution phase — implement tasks according to plan, coordinate agents"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Bash"
-  - "Glob"
-  - "Grep"
-  - "mcp__swarm__swarm_transition"
-  - "mcp__swarm__swarm_list"
+name: execute
+description: Execution phase — implement tasks according to plan, coordinate agents
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__swarm__swarm_transition, mcp__swarm__swarm_list
 ---
 
 # Skill: execute

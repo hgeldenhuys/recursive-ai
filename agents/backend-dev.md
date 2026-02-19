@@ -1,15 +1,8 @@
 ---
-name: "backend-dev"
-description: "Backend developer agent — APIs, services, data layer"
-memory: "project"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Bash"
-  - "Glob"
-  - "Grep"
+name: backend-dev
+description: Backend developer agent — APIs, services, data layer
+tools: Read, Write, Edit, Bash, Glob, Grep
+model: opus
 ---
 
 # Backend Developer Agent

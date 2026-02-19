@@ -1,6 +1,6 @@
 ---
-name: "swarm-execute"
-description: "Execution phase — implement tasks according to plan, coordinate agents"
+name: swarm-execute
+description: Execution phase — implement tasks according to plan, coordinate agents
 model: ""
 allowed-tools:
   - "Read"

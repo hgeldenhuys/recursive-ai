@@ -1,6 +1,6 @@
 ---
-name: "swarm-retro"
-description: "Standalone knowledge extraction — process retrospectives for knowledge items"
+name: swarm-retro
+description: Standalone knowledge extraction — process retrospectives for knowledge items
 model: ""
 allowed-tools:
   - "Read"

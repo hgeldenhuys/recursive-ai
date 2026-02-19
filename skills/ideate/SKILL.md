@@ -1,16 +1,7 @@
 ---
-name: "ideate"
-description: "Ideation phase — decompose problem, define acceptance criteria, estimate complexity"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Bash"
-  - "Glob"
-  - "Grep"
-  - "mcp__swarm__swarm_validate"
-  - "mcp__swarm__swarm_next_id"
+name: ideate
+description: Ideation phase — decompose problem, define acceptance criteria, estimate complexity
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__swarm__swarm_validate, mcp__swarm__swarm_next_id
 ---
 
 # Skill: ideate

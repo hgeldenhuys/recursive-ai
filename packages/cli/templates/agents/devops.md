@@ -1,15 +1,8 @@
 ---
-name: "devops"
-description: "DevOps engineer agent — CI/CD, infrastructure, deployment"
-memory: "project"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Bash"
-  - "Glob"
-  - "Grep"
+name: devops
+description: DevOps engineer agent — CI/CD, infrastructure, deployment
+tools: Read, Write, Edit, Bash, Glob, Grep
+model: sonnet
 ---
 
 # DevOps Engineer Agent

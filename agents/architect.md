@@ -1,15 +1,8 @@
 ---
-name: "architect"
-description: "Architect agent — system design, patterns, architecture decision records"
-memory: "project"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Bash"
-  - "Glob"
-  - "Grep"
+name: architect
+description: Architect agent — system design, patterns, architecture decision records
+tools: Read, Write, Edit, Bash, Glob, Grep
+model: opus
 ---
 
 # Architect Agent

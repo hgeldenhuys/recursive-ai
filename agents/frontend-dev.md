@@ -1,15 +1,8 @@
 ---
-name: "frontend-dev"
-description: "Frontend developer agent — UI components, pages, UX"
-memory: "project"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Bash"
-  - "Glob"
-  - "Grep"
+name: frontend-dev
+description: Frontend developer agent — UI components, pages, UX
+tools: Read, Write, Edit, Bash, Glob, Grep
+model: opus
 ---
 
 # Frontend Developer Agent

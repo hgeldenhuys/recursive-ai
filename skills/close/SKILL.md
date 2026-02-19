@@ -1,17 +1,7 @@
 ---
-name: "close"
-description: "Close phase — generate retrospective, extract knowledge, archive story"
-model: ""
-allowed-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Bash"
-  - "Glob"
-  - "Grep"
-  - "mcp__swarm__swarm_transition"
-  - "mcp__swarm__swarm_extract_knowledge"
-  - "mcp__swarm__swarm_list"
+name: close
+description: Close phase — generate retrospective, extract knowledge, archive story
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__swarm__swarm_transition, mcp__swarm__swarm_extract_knowledge, mcp__swarm__swarm_list
 ---
 
 # Skill: close

@@ -1,5 +1,6 @@
 {
   "name": "recursive-ai",
+  "description": "AI-native software development lifecycle tools",
   "owner": {
     "name": "recursive-ai"
   },
@@ -8,7 +9,7 @@
       "name": "swarm",
       "source": "./",
       "description": "AI-native SDLC with structured knowledge capture and lifecycle management",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "keywords": ["sdlc", "swarm", "knowledge-management"]
     }
   ]

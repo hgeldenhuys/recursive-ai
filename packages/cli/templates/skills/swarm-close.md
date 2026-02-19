@@ -1,6 +1,6 @@
 ---
-name: "swarm-close"
-description: "Close phase — generate retrospective, extract knowledge, archive story"
+name: swarm-close
+description: Close phase — generate retrospective, extract knowledge, archive story
 model: ""
 allowed-tools:
   - "Read"
