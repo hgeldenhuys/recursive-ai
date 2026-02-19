@@ -6,7 +6,7 @@ An AI-native SDLC methodology for Claude Code. SWARM (Structured Workflow for Ag
 
 SWARM brings Scrum-like discipline to AI agent workflows:
 
-- **Structured SDLC cycles** via `/swarm-*` skills (ideate, plan, execute, verify, close)
+- **Structured SDLC cycles** via `/swarm:*` skills (ideate, plan, execute, verify, close)
 - **Knowledge capture** with E/Q/P taxonomy (Epistemology, Qualia, Praxeology)
 - **Hierarchical consolidation** from repo to enterprise level
 - **Plugin distribution** via the official Claude Code plugin system
@@ -26,7 +26,7 @@ SWARM brings Scrum-like discipline to AI agent workflows:
 /swarm:init
 ```
 
-After init, skills are available as `/swarm-ideate`, `/swarm-plan`, `/swarm-execute`, `/swarm-verify`, `/swarm-close`, `/swarm-retro`, `/swarm-run`. The MCP tools (`swarm_validate`, `swarm_transition`, etc.) are also available immediately.
+After init, skills are available as `/swarm:ideate`, `/swarm:plan`, `/swarm:execute`, `/swarm:verify`, `/swarm:close`, `/swarm:retro`, `/swarm:run`. The MCP tools are used internally by the skills and available immediately.
 
 ### Option 2: Clone and Initialize
 
@@ -79,16 +79,16 @@ recursive status                # Check initialization status
 Once initialized, use the SWARM skills in Claude Code:
 
 ```
-/swarm-ideate Add user authentication with JWT tokens
-/swarm-plan MYPROJ-001
-/swarm-execute MYPROJ-001
-/swarm-verify MYPROJ-001
-/swarm-close MYPROJ-001
+/swarm:ideate Add user authentication with JWT tokens
+/swarm:plan MYPROJ-001
+/swarm:execute MYPROJ-001
+/swarm:verify MYPROJ-001
+/swarm:close MYPROJ-001
 ```
 
 Or run the full pipeline in one command:
 ```
-/swarm-run Add user authentication with JWT tokens
+/swarm:run Add user authentication with JWT tokens
 ```
 
 ### Story Lifecycle
@@ -100,24 +100,24 @@ draft → ideating → planned → executing → verifying → done → archived
 ```
 
 Each phase maps to a skill:
-1. `/swarm-ideate` — Problem decomposition, acceptance criteria
-2. `/swarm-plan` — Task breakdown, agent assignment
-3. `/swarm-execute` — Implementation with agent coordination
-4. `/swarm-verify` — Automated and manual verification
-5. `/swarm-close` — Retrospective, knowledge extraction, archival
+1. `/swarm:ideate` — Problem decomposition, acceptance criteria
+2. `/swarm:plan` — Task breakdown, agent assignment
+3. `/swarm:execute` — Implementation with agent coordination
+4. `/swarm:verify` — Automated and manual verification
+5. `/swarm:close` — Retrospective, knowledge extraction, archival
 
 ## Skills
 
 | Skill | Purpose |
 |-------|---------|
-| `/swarm-ideate` | Transform idea into story with acceptance criteria |
-| `/swarm-plan` | Break story into tasks, assign agents |
-| `/swarm-execute` | Spawn agents, run tasks in dependency order |
-| `/swarm-verify` | Verify all ACs with concrete evidence |
-| `/swarm-close` | Retrospective, knowledge extraction, archive |
-| `/swarm-retro` | Standalone knowledge extraction from any retrospective |
-| `/swarm-run` | Full pipeline with phase gating |
-| `/swarm-init` | Initialize SWARM in the current project |
+| `/swarm:ideate` | Transform idea into story with acceptance criteria |
+| `/swarm:plan` | Break story into tasks, assign agents |
+| `/swarm:execute` | Spawn agents, run tasks in dependency order |
+| `/swarm:verify` | Verify all ACs with concrete evidence |
+| `/swarm:close` | Retrospective, knowledge extraction, archive |
+| `/swarm:retro` | Standalone knowledge extraction from any retrospective |
+| `/swarm:run` | Full pipeline with phase gating |
+| `/swarm:init` | Initialize SWARM in the current project |
 
 ## MCP Tools
 
@@ -152,7 +152,7 @@ SWARM captures knowledge using three dimensions:
 - **Q (Qualia)**: Pain Points — gotchas, pitfalls, surprises
 - **P (Praxeology)**: Best Practices — proven techniques and conventions
 
-Knowledge items are automatically extracted during `/swarm-close` and stored in `.swarm/knowledge/` as markdown files with structured YAML frontmatter.
+Knowledge items are automatically extracted during `/swarm:close` and stored in `.swarm/knowledge/` as markdown files with structured YAML frontmatter.
 
 ## Knowledge Hierarchy
 
