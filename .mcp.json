@@ -1,9 +1,7 @@
 {
-  "mcpServers": {
-    "swarm": {
-      "command": "bun",
-      "args": ["run", "${CLAUDE_PLUGIN_ROOT}/dist/mcp-server.js"],
-      "cwd": "${CLAUDE_PLUGIN_ROOT}"
-    }
+  "swarm": {
+    "command": "bun",
+    "args": ["run", "${CLAUDE_PLUGIN_ROOT}/dist/mcp-server.js"],
+    "cwd": "${CLAUDE_PLUGIN_ROOT}"
   }
 }

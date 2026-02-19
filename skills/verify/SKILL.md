@@ -1,7 +1,6 @@
 ---
 name: verify
 description: Verification phase — run all checks, validate ACs, confirm Definition of Done
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__plugin_swarm_swarm__swarm_validate, mcp__plugin_swarm_swarm__swarm_transition
 ---
 
 # Skill: verify

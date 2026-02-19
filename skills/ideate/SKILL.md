@@ -1,7 +1,6 @@
 ---
 name: ideate
 description: Ideation phase — decompose problem, define acceptance criteria, estimate complexity
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__plugin_swarm_swarm__swarm_validate, mcp__plugin_swarm_swarm__swarm_next_id
 ---
 
 # Skill: ideate

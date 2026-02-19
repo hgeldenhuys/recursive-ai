@@ -1,7 +1,6 @@
 ---
 name: init
 description: Initialize SWARM SDLC in the current project
-allowed-tools: Read, Write, Bash, Glob, mcp__plugin_swarm_swarm__swarm_init, mcp__plugin_swarm_swarm__swarm_status
 ---
 
 # Skill: init

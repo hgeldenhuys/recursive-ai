@@ -1,7 +1,6 @@
 ---
 name: execute
 description: Execution phase — implement tasks according to plan, coordinate agents
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__plugin_swarm_swarm__swarm_transition, mcp__plugin_swarm_swarm__swarm_list
 ---
 
 # Skill: execute

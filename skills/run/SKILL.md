@@ -1,7 +1,6 @@
 ---
 name: run
 description: Full pipeline — run ideate, plan, execute, verify, close with phase gating
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__plugin_swarm_swarm__swarm_validate, mcp__plugin_swarm_swarm__swarm_transition, mcp__plugin_swarm_swarm__swarm_next_id, mcp__plugin_swarm_swarm__swarm_extract_knowledge, mcp__plugin_swarm_swarm__swarm_list
 ---
 
 # Skill: run

@@ -1,7 +1,6 @@
 ---
 name: plan
 description: Planning phase — create task breakdown, assign agents, estimate effort
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__plugin_swarm_swarm__swarm_validate, mcp__plugin_swarm_swarm__swarm_transition
 ---
 
 # Skill: plan
