@@ -1,7 +1,7 @@
 ---
 name: retro
 description: Standalone knowledge extraction — process retrospectives for knowledge items
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__swarm__swarm_extract_knowledge, mcp__swarm__swarm_list
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__plugin_swarm_swarm__swarm_extract_knowledge, mcp__plugin_swarm_swarm__swarm_list
 ---
 
 # Skill: retro

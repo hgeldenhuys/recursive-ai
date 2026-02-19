@@ -7997,14 +7997,17 @@ class SwarmInstaller {
       const targetDir = join3(userSkillsDir, targetName);
       const targetFile = join3(targetDir, "SKILL.md");
       const relPath = `~/.claude/skills/${targetName}/SKILL.md`;
+      let content = readFileSync3(srcFile, "utf-8");
+      content = content.replace(/^name: (\w+)$/m, "name: swarm-$1");
       if (existsSync2(targetFile)) {
-        results.push({ action: "skipped", path: relPath });
-        continue;
+        const existing = readFileSync3(targetFile, "utf-8");
+        if (existing === content) {
+          results.push({ action: "skipped", path: relPath });
+          continue;
+        }
       }
       if (!this.dryRun) {
         mkdirSync2(targetDir, { recursive: true });
-        let content = readFileSync3(srcFile, "utf-8");
-        content = content.replace(/^name: (\w+)$/m, "name: swarm-$1");
         Bun.write(targetFile, content);
       }
       results.push({ action: "created", path: relPath });

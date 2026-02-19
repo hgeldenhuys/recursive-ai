@@ -310,16 +310,20 @@ export class SwarmInstaller {
       const targetFile = join(targetDir, 'SKILL.md');
       const relPath = `~/.claude/skills/${targetName}/SKILL.md`;
 
+      let content = readFileSync(srcFile, 'utf-8');
+      // Ensure the name field has the swarm- prefix
+      content = content.replace(/^name: (\w+)$/m, 'name: swarm-$1');
+
       if (existsSync(targetFile)) {
-        results.push({ action: 'skipped', path: relPath });
-        continue;
+        const existing = readFileSync(targetFile, 'utf-8');
+        if (existing === content) {
+          results.push({ action: 'skipped', path: relPath });
+          continue;
+        }
       }
 
       if (!this.dryRun) {
         mkdirSync(targetDir, { recursive: true });
-        let content = readFileSync(srcFile, 'utf-8');
-        // Ensure the name field has the swarm- prefix
-        content = content.replace(/^name: (\w+)$/m, 'name: swarm-$1');
         Bun.write(targetFile, content);
       }
       results.push({ action: 'created', path: relPath });
