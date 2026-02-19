@@ -7969,12 +7969,20 @@ class SwarmInstaller {
   ensureUserSkills() {
     const results = [];
     const userSkillsDir = join3(homedir(), ".claude", "skills");
-    const pluginRoot = join3(import.meta.dir, "..", "..");
-    const bundledSkillsDir = join3(pluginRoot, "skills");
-    const repoRoot = join3(import.meta.dir, "..", "..", "..");
-    const repoSkillsDir = join3(repoRoot, "skills");
-    const skillsSourceDir = existsSync2(bundledSkillsDir) ? bundledSkillsDir : repoSkillsDir;
-    if (!existsSync2(skillsSourceDir)) {
+    const candidates = [
+      join3(import.meta.dir, "..", "skills"),
+      join3(import.meta.dir, "..", "..", "skills"),
+      join3(import.meta.dir, "..", "..", "..", "skills"),
+      join3(process.cwd(), "skills")
+    ];
+    let skillsSourceDir = null;
+    for (const candidate of candidates) {
+      if (existsSync2(candidate)) {
+        skillsSourceDir = candidate;
+        break;
+      }
+    }
+    if (!skillsSourceDir) {
       return results;
     }
     const skillDirs = readdirSync2(skillsSourceDir, { withFileTypes: true });

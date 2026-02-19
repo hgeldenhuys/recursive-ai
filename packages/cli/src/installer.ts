@@ -274,18 +274,26 @@ export class SwarmInstaller {
     const results: InstallResult[] = [];
     const userSkillsDir = join(homedir(), '.claude', 'skills');
 
-    // Skill source: {bundle}/../../skills/{name}/SKILL.md
-    // import.meta.dir = dist/ when bundled, packages/cli/src/ when dev
-    const pluginRoot = join(import.meta.dir, '..', '..');
-    const bundledSkillsDir = join(pluginRoot, 'skills');
+    // Skill source candidates (checked in order):
+    // - dist/  → ../skills/         (bundled MCP server)
+    // - packages/cli/src/ → ../../../skills/  (dev/source)
+    // - process.cwd()/skills/       (plugin cache CWD set by .mcp.json)
+    const candidates = [
+      join(import.meta.dir, '..', 'skills'),
+      join(import.meta.dir, '..', '..', 'skills'),
+      join(import.meta.dir, '..', '..', '..', 'skills'),
+      join(process.cwd(), 'skills'),
+    ];
 
-    // Fallback: check repo-root skills/ directory
-    const repoRoot = join(import.meta.dir, '..', '..', '..');
-    const repoSkillsDir = join(repoRoot, 'skills');
+    let skillsSourceDir: string | null = null;
+    for (const candidate of candidates) {
+      if (existsSync(candidate)) {
+        skillsSourceDir = candidate;
+        break;
+      }
+    }
 
-    const skillsSourceDir = existsSync(bundledSkillsDir) ? bundledSkillsDir : repoSkillsDir;
-
-    if (!existsSync(skillsSourceDir)) {
+    if (!skillsSourceDir) {
       return results;
     }
 
