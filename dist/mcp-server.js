@@ -7703,7 +7703,8 @@ function commandList(directory, args) {
 }
 
 // packages/cli/src/installer.ts
-import { existsSync as existsSync2, mkdirSync as mkdirSync2, readFileSync as readFileSync3 } from "fs";
+import { existsSync as existsSync2, mkdirSync as mkdirSync2, readFileSync as readFileSync3, readdirSync as readdirSync2 } from "fs";
+import { homedir } from "os";
 import { basename as basename2, join as join3 } from "path";
 
 // packages/cli/src/templates.ts
@@ -7823,6 +7824,7 @@ class SwarmInstaller {
     results.push(...this.ensureTemplates());
     results.push(...this.ensureAgentMemory());
     results.push(...this.ensureGitignore());
+    results.push(...this.ensureUserSkills());
     return results;
   }
   ensureDirectories() {
@@ -7962,6 +7964,43 @@ class SwarmInstaller {
       Bun.write(fullPath, content);
     }
     results.push({ action: existsSync2(fullPath) ? "merged" : "created", path: relPath });
+    return results;
+  }
+  ensureUserSkills() {
+    const results = [];
+    const userSkillsDir = join3(homedir(), ".claude", "skills");
+    const pluginRoot = join3(import.meta.dir, "..", "..");
+    const bundledSkillsDir = join3(pluginRoot, "skills");
+    const repoRoot = join3(import.meta.dir, "..", "..", "..");
+    const repoSkillsDir = join3(repoRoot, "skills");
+    const skillsSourceDir = existsSync2(bundledSkillsDir) ? bundledSkillsDir : repoSkillsDir;
+    if (!existsSync2(skillsSourceDir)) {
+      return results;
+    }
+    const skillDirs = readdirSync2(skillsSourceDir, { withFileTypes: true });
+    for (const entry of skillDirs) {
+      if (!entry.isDirectory())
+        continue;
+      const skillName = entry.name;
+      const srcFile = join3(skillsSourceDir, skillName, "SKILL.md");
+      if (!existsSync2(srcFile))
+        continue;
+      const targetName = `swarm-${skillName}`;
+      const targetDir = join3(userSkillsDir, targetName);
+      const targetFile = join3(targetDir, "SKILL.md");
+      const relPath = `~/.claude/skills/${targetName}/SKILL.md`;
+      if (existsSync2(targetFile)) {
+        results.push({ action: "skipped", path: relPath });
+        continue;
+      }
+      if (!this.dryRun) {
+        mkdirSync2(targetDir, { recursive: true });
+        let content = readFileSync3(srcFile, "utf-8");
+        content = content.replace(/^name: (\w+)$/m, "name: swarm-$1");
+        Bun.write(targetFile, content);
+      }
+      results.push({ action: "created", path: relPath });
+    }
     return results;
   }
   report(results) {

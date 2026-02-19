@@ -6,12 +6,13 @@
  * - Directory exists? Skip.
  * - File exists? Skip (or merge for .gitignore).
  *
- * Note: Skills and agent definitions are provided by the plugin itself
- * (in /skills/ and /agents/ at the repo root). The installer only creates
- * project-specific files: .swarm/ structure and agent memory.
+ * Skills are installed to ~/.claude/skills/swarm-{name}/SKILL.md so they
+ * appear in the / autocomplete menu. Agent definitions are provided by
+ * the plugin itself (in /agents/ at the repo root).
  */
 
-import { existsSync, mkdirSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
+import { homedir } from 'node:os';
 import { basename, join } from 'node:path';
 import {
   AGENT_MEMORY_TITLES,
@@ -76,6 +77,7 @@ export class SwarmInstaller {
     results.push(...this.ensureTemplates());
     results.push(...this.ensureAgentMemory());
     results.push(...this.ensureGitignore());
+    results.push(...this.ensureUserSkills());
 
     return results;
   }
@@ -261,6 +263,60 @@ export class SwarmInstaller {
     }
 
     results.push({ action: existsSync(fullPath) ? 'merged' : 'created', path: relPath });
+    return results;
+  }
+
+  /**
+   * Copy skill files to ~/.claude/skills/swarm-{name}/SKILL.md so they
+   * appear in the / autocomplete menu.
+   */
+  ensureUserSkills(): InstallResult[] {
+    const results: InstallResult[] = [];
+    const userSkillsDir = join(homedir(), '.claude', 'skills');
+
+    // Skill source: {bundle}/../../skills/{name}/SKILL.md
+    // import.meta.dir = dist/ when bundled, packages/cli/src/ when dev
+    const pluginRoot = join(import.meta.dir, '..', '..');
+    const bundledSkillsDir = join(pluginRoot, 'skills');
+
+    // Fallback: check repo-root skills/ directory
+    const repoRoot = join(import.meta.dir, '..', '..', '..');
+    const repoSkillsDir = join(repoRoot, 'skills');
+
+    const skillsSourceDir = existsSync(bundledSkillsDir) ? bundledSkillsDir : repoSkillsDir;
+
+    if (!existsSync(skillsSourceDir)) {
+      return results;
+    }
+
+    const skillDirs = readdirSync(skillsSourceDir, { withFileTypes: true });
+
+    for (const entry of skillDirs) {
+      if (!entry.isDirectory()) continue;
+      const skillName = entry.name;
+      const srcFile = join(skillsSourceDir, skillName, 'SKILL.md');
+      if (!existsSync(srcFile)) continue;
+
+      const targetName = `swarm-${skillName}`;
+      const targetDir = join(userSkillsDir, targetName);
+      const targetFile = join(targetDir, 'SKILL.md');
+      const relPath = `~/.claude/skills/${targetName}/SKILL.md`;
+
+      if (existsSync(targetFile)) {
+        results.push({ action: 'skipped', path: relPath });
+        continue;
+      }
+
+      if (!this.dryRun) {
+        mkdirSync(targetDir, { recursive: true });
+        let content = readFileSync(srcFile, 'utf-8');
+        // Ensure the name field has the swarm- prefix
+        content = content.replace(/^name: (\w+)$/m, 'name: swarm-$1');
+        Bun.write(targetFile, content);
+      }
+      results.push({ action: 'created', path: relPath });
+    }
+
     return results;
   }
 
