@@ -5,6 +5,10 @@
  * in any project. Every operation checks before acting:
  * - Directory exists? Skip.
  * - File exists? Skip (or merge for .gitignore).
+ *
+ * Note: Skills and agent definitions are provided by the plugin itself
+ * (in /skills/ and /agents/ at the repo root). The installer only creates
+ * project-specific files: .swarm/ structure and agent memory.
  */
 
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
@@ -12,11 +16,8 @@ import { basename, join } from 'node:path';
 import {
   AGENT_MEMORY_TITLES,
   AGENT_NAMES,
-  AGENT_TEMPLATES,
   GITIGNORE_RULES,
   GITKEEP_DIRECTORIES,
-  SKILL_NAMES,
-  SKILL_TEMPLATES,
   SWARM_DIRECTORIES,
   type TemplateContext,
   agentMemorySeed,
@@ -73,8 +74,7 @@ export class SwarmInstaller {
     results.push(...this.ensureConfig());
     results.push(...this.ensureQualityGates());
     results.push(...this.ensureTemplates());
-    results.push(...this.ensureSkills());
-    results.push(...this.ensureAgents());
+    results.push(...this.ensureAgentMemory());
     results.push(...this.ensureGitignore());
 
     return results;
@@ -189,51 +189,11 @@ export class SwarmInstaller {
   }
 
   /**
-   * Create .claude/skills/swarm-{name}/SKILL.md for all 7 SWARM skills.
+   * Create .claude/agent-memory/{name}/MEMORY.md for all 6 agents.
+   * Agent definitions (.claude/agents/*.md) are provided by the plugin itself.
    */
-  ensureSkills(): InstallResult[] {
+  ensureAgentMemory(): InstallResult[] {
     const results: InstallResult[] = [];
-
-    for (const name of SKILL_NAMES) {
-      const relPath = `.claude/skills/${name}/SKILL.md`;
-      const fullPath = join(this.projectDir, relPath);
-
-      if (existsSync(fullPath)) {
-        results.push({ action: 'skipped', path: relPath });
-      } else {
-        if (!this.dryRun) {
-          mkdirSync(join(this.projectDir, `.claude/skills/${name}`), { recursive: true });
-          const templateFn = SKILL_TEMPLATES[name]!;
-          Bun.write(fullPath, templateFn());
-        }
-        results.push({ action: 'created', path: relPath });
-      }
-    }
-
-    return results;
-  }
-
-  /**
-   * Create .claude/agents/{name}.md (6) and .claude/agent-memory/{name}/MEMORY.md (6).
-   */
-  ensureAgents(): InstallResult[] {
-    const results: InstallResult[] = [];
-
-    for (const name of AGENT_NAMES) {
-      const relPath = `.claude/agents/${name}.md`;
-      const fullPath = join(this.projectDir, relPath);
-
-      if (existsSync(fullPath)) {
-        results.push({ action: 'skipped', path: relPath });
-      } else {
-        if (!this.dryRun) {
-          mkdirSync(join(this.projectDir, '.claude/agents'), { recursive: true });
-          const templateFn = AGENT_TEMPLATES[name]!;
-          Bun.write(fullPath, templateFn());
-        }
-        results.push({ action: 'created', path: relPath });
-      }
-    }
 
     for (const name of AGENT_NAMES) {
       const relPath = `.claude/agent-memory/${name}/MEMORY.md`;
@@ -359,7 +319,7 @@ export class SwarmInstaller {
       lines.push('');
     }
 
-    lines.push('Next: Run /swarm-ideate to create your first story');
+    lines.push('Next: Run /swarm:ideate to create your first story');
 
     return lines.join('\n');
   }

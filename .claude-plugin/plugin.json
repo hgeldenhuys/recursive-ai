@@ -1,10 +1,11 @@
 {
-  "id": "recursive-ai-swarm",
-  "name": "SWARM SDLC Framework",
-  "version": "0.1.0",
-  "description": "AI-native SDLC methodology with structured knowledge capture and hierarchical consolidation",
-  "author": "recursive-ai",
-  "type": "skill",
-  "entryPoint": "packages/cli/src/index.ts",
-  "dependencies": []
+  "name": "swarm",
+  "version": "0.2.0",
+  "description": "AI-native SDLC with structured knowledge capture and lifecycle management",
+  "author": {
+    "name": "recursive-ai"
+  },
+  "repository": "https://github.com/hgeldenhuys/recursive-ai",
+  "license": "MIT",
+  "keywords": ["sdlc", "swarm", "knowledge-management", "ai-agents", "scrum"]
 }

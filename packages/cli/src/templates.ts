@@ -252,7 +252,4 @@ export const GITIGNORE_RULES: string[] = [
   '',
   '# Agent memory (project-specific, not shared)',
   '.claude/agent-memory/',
-  '',
-  '# Skill working files',
-  '.claude/commands/swarm-*.md',
 ];

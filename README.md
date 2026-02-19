@@ -6,14 +6,27 @@ An AI-native SDLC methodology for Claude Code. SWARM (Structured Workflow for Ag
 
 SWARM brings Scrum-like discipline to AI agent workflows:
 
-- **Structured SDLC cycles** via `/swarm-*` skills (ideate, plan, execute, verify, close)
+- **Structured SDLC cycles** via `/swarm:*` skills (ideate, plan, execute, verify, close)
 - **Knowledge capture** with E/Q/P taxonomy (Epistemology, Qualia, Praxeology)
 - **Hierarchical consolidation** from repo to enterprise level
-- **Marketplace distribution** as a Claude Code plugin
+- **Plugin distribution** via the official Claude Code plugin system
 
 ## Installation
 
-### Option 1: Clone and Initialize (recommended)
+### Option 1: Claude Code Plugin (recommended)
+
+```bash
+# Add the marketplace
+/plugin marketplace add hgeldenhuys/recursive-ai
+
+# Install the SWARM plugin
+/plugin install swarm@recursive-ai
+
+# Initialize SWARM in your project
+/swarm:init
+```
+
+### Option 2: Clone and Initialize
 
 ```bash
 # Clone the repo alongside your project (or anywhere accessible)
@@ -26,27 +39,7 @@ cd /path/to/your-project
 bun /path/to/recursive-ai/packages/cli/src/index.ts init
 ```
 
-### Option 2: Git Submodule
-
-```bash
-# Add as a submodule in your project
-cd your-project
-git submodule add https://github.com/hgeldenhuys/recursive-ai.git .recursive-ai
-cd .recursive-ai && bun install && cd ..
-
-# Initialize SWARM
-bun .recursive-ai/packages/cli/src/index.ts init
-```
-
-### Option 3: npx-style (one-liner)
-
-```bash
-# Clone, install, and initialize in one step
-cd your-project
-bunx --bun sh -c 'git clone https://github.com/hgeldenhuys/recursive-ai.git /tmp/recursive-ai && cd /tmp/recursive-ai && bun install && bun packages/cli/src/index.ts init --prefix $(basename $(pwd))'
-```
-
-### What `recursive init` Creates
+### What initialization creates
 
 ```
 your-project/
@@ -64,21 +57,6 @@ your-project/
 │   ├── definition-of-done.yaml      # Quality gate: when is a story done?
 │   └── ways-of-working.yaml         # Team conventions
 ├── .claude/
-│   ├── skills/
-│   │   ├── swarm-ideate/SKILL.md
-│   │   ├── swarm-plan/SKILL.md
-│   │   ├── swarm-execute/SKILL.md
-│   │   ├── swarm-verify/SKILL.md
-│   │   ├── swarm-close/SKILL.md
-│   │   ├── swarm-retro/SKILL.md
-│   │   └── swarm-run/SKILL.md
-│   ├── agents/
-│   │   ├── backend-dev.md
-│   │   ├── frontend-dev.md
-│   │   ├── qa-engineer.md
-│   │   ├── architect.md
-│   │   ├── tech-writer.md
-│   │   └── devops.md
 │   └── agent-memory/
 │       └── {agent}/MEMORY.md        # Per-agent tactical learnings
 └── .gitignore                       # Updated with SWARM rules
@@ -93,44 +71,21 @@ recursive init --dry-run        # Preview what would be created
 recursive status                # Check initialization status
 ```
 
-### Verifying Installation
-
-```bash
-cd your-project
-bun /path/to/recursive-ai/packages/cli/src/index.ts status
-```
-
-You should see all checks passing:
-```
-SWARM status: checking .swarm/ directory...
-  + .swarm/config.md
-  + .swarm/backlog
-  + .swarm/archive
-  + .swarm/retrospectives
-  + .swarm/knowledge
-  + .swarm/templates/story.md
-  + .swarm/definition-of-ready.yaml
-  + .swarm/definition-of-done.yaml
-  + .swarm/ways-of-working.yaml
-
-SWARM is fully initialized. Run /swarm-ideate to start.
-```
-
 ## Usage
 
 Once initialized, use the SWARM skills in Claude Code:
 
 ```
-/swarm-ideate Add user authentication with JWT tokens
-/swarm-plan MYPROJ-001
-/swarm-execute MYPROJ-001
-/swarm-verify MYPROJ-001
-/swarm-close MYPROJ-001
+/swarm:ideate Add user authentication with JWT tokens
+/swarm:plan MYPROJ-001
+/swarm:execute MYPROJ-001
+/swarm:verify MYPROJ-001
+/swarm:close MYPROJ-001
 ```
 
 Or run the full pipeline in one command:
 ```
-/swarm-run Add user authentication with JWT tokens
+/swarm:run Add user authentication with JWT tokens
 ```
 
 ### Story Lifecycle
@@ -142,23 +97,38 @@ draft → ideating → planned → executing → verifying → done → archived
 ```
 
 Each phase maps to a skill:
-1. `/swarm-ideate` — Problem decomposition, acceptance criteria
-2. `/swarm-plan` — Task breakdown, agent assignment
-3. `/swarm-execute` — Implementation with agent coordination
-4. `/swarm-verify` — Automated and manual verification
-5. `/swarm-close` — Retrospective, knowledge extraction, archival
+1. `/swarm:ideate` — Problem decomposition, acceptance criteria
+2. `/swarm:plan` — Task breakdown, agent assignment
+3. `/swarm:execute` — Implementation with agent coordination
+4. `/swarm:verify` — Automated and manual verification
+5. `/swarm:close` — Retrospective, knowledge extraction, archival
 
 ## Skills
 
 | Skill | Purpose |
 |-------|---------|
-| `/swarm-ideate` | Transform idea into story with acceptance criteria |
-| `/swarm-plan` | Break story into tasks, assign agents |
-| `/swarm-execute` | Spawn agents, run tasks in dependency order |
-| `/swarm-verify` | Verify all ACs with concrete evidence |
-| `/swarm-close` | Retrospective, knowledge extraction, archive |
-| `/swarm-retro` | Standalone knowledge extraction from any retrospective |
-| `/swarm-run` | Full pipeline with phase gating |
+| `/swarm:ideate` | Transform idea into story with acceptance criteria |
+| `/swarm:plan` | Break story into tasks, assign agents |
+| `/swarm:execute` | Spawn agents, run tasks in dependency order |
+| `/swarm:verify` | Verify all ACs with concrete evidence |
+| `/swarm:close` | Retrospective, knowledge extraction, archive |
+| `/swarm:retro` | Standalone knowledge extraction from any retrospective |
+| `/swarm:run` | Full pipeline with phase gating |
+| `/swarm:init` | Initialize SWARM in the current project |
+
+## MCP Tools
+
+The plugin exposes enforcement commands via MCP tools:
+
+| Tool | Purpose |
+|------|---------|
+| `swarm_init` | Initialize SWARM in a project directory |
+| `swarm_validate` | Validate story frontmatter |
+| `swarm_transition` | Check if a status transition is allowed |
+| `swarm_next_id` | Get next story ID from config |
+| `swarm_list` | List stories/knowledge items |
+| `swarm_extract_knowledge` | Extract knowledge from retrospectives |
+| `swarm_status` | Check SWARM initialization status |
 
 ## Agents
 
@@ -179,7 +149,7 @@ SWARM captures knowledge using three dimensions:
 - **Q (Qualia)**: Pain Points — gotchas, pitfalls, surprises
 - **P (Praxeology)**: Best Practices — proven techniques and conventions
 
-Knowledge items are automatically extracted during `/swarm-close` and stored in `.swarm/knowledge/` as markdown files with structured YAML frontmatter.
+Knowledge items are automatically extracted during `/swarm:close` and stored in `.swarm/knowledge/` as markdown files with structured YAML frontmatter.
 
 ## Knowledge Hierarchy
 
@@ -210,10 +180,11 @@ cd recursive-ai
 bun install
 
 # Run checks
-bun test             # 68 tests, 210 assertions
+bun test             # Run all tests
 bun run typecheck    # Type check all packages
 bun run lint         # Lint with Biome
 bun run lint:fix     # Auto-fix lint issues
+bun run build:mcp    # Bundle MCP server
 ```
 
 ## License

@@ -60,7 +60,7 @@ async function main() {
       }
 
       if (allPresent) {
-        console.log('\nSWARM is fully initialized. Run /swarm-ideate to start.');
+        console.log('\nSWARM is fully initialized. Run /swarm:ideate to start.');
       } else {
         console.log('\nSWARM is not fully initialized. Run `recursive init` to set up.');
       }
@@ -74,7 +74,9 @@ async function main() {
         console.log(JSON.stringify({ ok: false, error: 'Usage: recursive validate <story-file>' }));
         process.exit(1);
       }
-      commandValidate(storyFile);
+      const result = commandValidate(storyFile);
+      console.log(JSON.stringify(result));
+      if (!result.ok) process.exit(1);
       break;
     }
 
@@ -91,7 +93,9 @@ async function main() {
         );
         process.exit(1);
       }
-      commandTransition(storyFile, targetStatus);
+      const result = commandTransition(storyFile, targetStatus);
+      console.log(JSON.stringify(result));
+      if (!result.ok) process.exit(1);
       break;
     }
 
@@ -107,7 +111,9 @@ async function main() {
         );
         process.exit(1);
       }
-      commandExtractKnowledge(retroFile, args.slice(2));
+      const result = commandExtractKnowledge(retroFile, args.slice(2));
+      console.log(JSON.stringify(result));
+      if (!result.ok) process.exit(1);
       break;
     }
 
@@ -118,7 +124,9 @@ async function main() {
         console.log(JSON.stringify({ ok: false, error: 'Usage: recursive next-id <config-file>' }));
         process.exit(1);
       }
-      commandNextId(configFile);
+      const result = commandNextId(configFile);
+      console.log(JSON.stringify(result));
+      if (!result.ok) process.exit(1);
       break;
     }
 
@@ -134,7 +142,9 @@ async function main() {
         );
         process.exit(1);
       }
-      commandList(directory, args.slice(2));
+      const result = commandList(directory, args.slice(2));
+      console.log(JSON.stringify(result));
+      if (!result.ok) process.exit(1);
       break;
     }
 

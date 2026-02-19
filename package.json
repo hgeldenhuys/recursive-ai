@@ -11,7 +11,8 @@
     "lint": "bunx biome check .",
     "lint:fix": "bunx biome check --write .",
     "test": "bun test",
-    "format": "bunx biome format --write ."
+    "format": "bunx biome format --write .",
+    "build:mcp": "bun build packages/cli/src/mcp-server.ts --target=bun --outfile=dist/mcp-server.js"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",

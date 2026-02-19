@@ -68,33 +68,7 @@ describe('SwarmInstaller', () => {
     expect(existsSync(join(TEST_DIR, '.swarm/templates/knowledge-item.md'))).toBe(true);
   });
 
-  it('creates all 7 skill files', async () => {
-    const installer = new SwarmInstaller({ projectDir: TEST_DIR });
-    await installer.install();
-
-    const skills = [
-      'swarm-ideate',
-      'swarm-plan',
-      'swarm-execute',
-      'swarm-verify',
-      'swarm-close',
-      'swarm-retro',
-      'swarm-run',
-    ];
-
-    for (const skill of skills) {
-      const skillPath = join(TEST_DIR, `.claude/skills/${skill}/SKILL.md`);
-      expect(existsSync(skillPath)).toBe(true);
-
-      const content = await Bun.file(skillPath).text();
-      // Verify it has valid YAML frontmatter with name and description
-      expect(content).toStartWith('---\n');
-      expect(content).toContain(skill);
-      expect(content).toContain('description');
-    }
-  });
-
-  it('creates all 6 agent files', async () => {
+  it('creates all 6 agent memory files', async () => {
     const installer = new SwarmInstaller({ projectDir: TEST_DIR });
     await installer.install();
 
@@ -108,9 +82,29 @@ describe('SwarmInstaller', () => {
     ];
 
     for (const agent of agents) {
-      expect(existsSync(join(TEST_DIR, `.claude/agents/${agent}.md`))).toBe(true);
-      expect(existsSync(join(TEST_DIR, `.claude/agent-memory/${agent}/MEMORY.md`))).toBe(true);
+      const memoryPath = join(TEST_DIR, `.claude/agent-memory/${agent}/MEMORY.md`);
+      expect(existsSync(memoryPath)).toBe(true);
+
+      const content = await Bun.file(memoryPath).text();
+      expect(content).toContain('Memory');
+      expect(content).toContain('Patterns & Preferences');
     }
+  });
+
+  it('does not create skill files (provided by plugin)', async () => {
+    const installer = new SwarmInstaller({ projectDir: TEST_DIR });
+    await installer.install();
+
+    // Skills are provided by the plugin, not created by the installer
+    expect(existsSync(join(TEST_DIR, '.claude/skills'))).toBe(false);
+  });
+
+  it('does not create agent definition files (provided by plugin)', async () => {
+    const installer = new SwarmInstaller({ projectDir: TEST_DIR });
+    await installer.install();
+
+    // Agent definitions are provided by the plugin, not created by the installer
+    expect(existsSync(join(TEST_DIR, '.claude/agents'))).toBe(false);
   });
 
   it('is idempotent - second run skips all', async () => {
@@ -163,6 +157,6 @@ describe('SwarmInstaller', () => {
 
     expect(report).toContain('SWARM SDLC installed');
     expect(report).toContain('Created:');
-    expect(report).toContain('/swarm-ideate');
+    expect(report).toContain('/swarm:ideate');
   });
 });
