@@ -1,0 +1,95 @@
+{
+  "name": "SWARM SDLC Framework",
+  "version": "0.1.0",
+  "description": "Complete AI-native SDLC with structured knowledge capture. Implements the SWARM methodology: Scrum for AI agent swarms with hierarchical knowledge consolidation from repo to enterprise level.",
+  "author": "recursive-ai",
+  "license": "MIT",
+  "homepage": "https://github.com/hgeldenhuys/recursive-ai",
+  "repository": "https://github.com/hgeldenhuys/recursive-ai",
+  "tags": [
+    "sdlc",
+    "swarm",
+    "knowledge-management",
+    "ai-agents",
+    "scrum",
+    "retrospectives",
+    "skills",
+    "marketplace"
+  ],
+  "contents": [
+    {
+      "type": "skill",
+      "name": "swarm-ideate",
+      "description": "Transform a vague idea into a well-defined story with acceptance criteria"
+    },
+    {
+      "type": "skill",
+      "name": "swarm-plan",
+      "description": "Break a story into tasks, assign agents, and establish dependencies"
+    },
+    {
+      "type": "skill",
+      "name": "swarm-execute",
+      "description": "Execute planned tasks by spawning agents in dependency order"
+    },
+    {
+      "type": "skill",
+      "name": "swarm-verify",
+      "description": "Verify all acceptance criteria are met with concrete evidence"
+    },
+    {
+      "type": "skill",
+      "name": "swarm-close",
+      "description": "Generate retrospective, extract knowledge, capture learnings, and archive the story"
+    },
+    {
+      "type": "skill",
+      "name": "swarm-retro",
+      "description": "Standalone knowledge extraction from any retrospective"
+    },
+    {
+      "type": "skill",
+      "name": "swarm-run",
+      "description": "Full SDLC pipeline with phase gating: ideate to close in one command"
+    },
+    {
+      "type": "agent",
+      "name": "backend-dev",
+      "description": "Backend development specialist for TypeScript/Bun"
+    },
+    {
+      "type": "agent",
+      "name": "frontend-dev",
+      "description": "Frontend development specialist for React/TypeScript"
+    },
+    {
+      "type": "agent",
+      "name": "qa-engineer",
+      "description": "QA specialist for testing and validation"
+    },
+    {
+      "type": "agent",
+      "name": "architect",
+      "description": "Solutions architect for system design"
+    },
+    {
+      "type": "agent",
+      "name": "tech-writer",
+      "description": "Documentation specialist for retrospectives and knowledge capture"
+    },
+    {
+      "type": "agent",
+      "name": "devops",
+      "description": "Infrastructure specialist for CI/CD and deployment"
+    },
+    {
+      "type": "template",
+      "name": "swarm-init",
+      "description": "Bootstrap template for initializing SWARM in any project"
+    }
+  ],
+  "install": {
+    "command": "bun packages/cli/src/index.ts init",
+    "postInstall": "Run /swarm-ideate to create your first story"
+  }
+}

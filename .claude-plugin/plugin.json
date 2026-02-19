@@ -1,0 +1,10 @@
+{
+  "id": "recursive-ai-swarm",
+  "name": "SWARM SDLC Framework",
+  "version": "0.1.0",
+  "description": "AI-native SDLC methodology with structured knowledge capture and hierarchical consolidation",
+  "author": "recursive-ai",
+  "type": "skill",
+  "entryPoint": "packages/cli/src/index.ts",
+  "dependencies": []
+}
