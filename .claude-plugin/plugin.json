@@ -1,11 +1,14 @@
 {
   "name": "swarm",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "AI-native SDLC with structured knowledge capture and lifecycle management",
   "author": {
     "name": "recursive-ai"
   },
   "repository": "https://github.com/hgeldenhuys/recursive-ai",
   "license": "MIT",
-  "keywords": ["sdlc", "swarm", "knowledge-management", "ai-agents", "scrum"]
+  "keywords": ["sdlc", "swarm", "knowledge-management", "ai-agents", "scrum"],
+  "skills": "./skills/",
+  "agents": "./agents/",
+  "mcpServers": "./.mcp.json"
 }

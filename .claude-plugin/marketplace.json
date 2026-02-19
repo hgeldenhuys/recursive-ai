@@ -8,7 +8,7 @@
       "name": "swarm",
       "source": "./",
       "description": "AI-native SDLC with structured knowledge capture and lifecycle management",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "keywords": ["sdlc", "swarm", "knowledge-management"]
     }
   ]
