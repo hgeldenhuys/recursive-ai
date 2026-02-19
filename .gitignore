@@ -2,3 +2,8 @@ node_modules/
 *.tsbuildinfo
 .test-install/
 .DS_Store
+# SWARM SDLC (local init for testing)
+.swarm/
+
+# Agent memory (project-specific, not shared)
+.claude/agent-memory/
